@@ -1,0 +1,44 @@
+fake-api:
+  url: 'https://fakestoreapi.com'
+
+# ✅ CONFIGURAÇÃO DO BANCO DE DADOS
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_fakeapi
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  cloud:
+    loadbalancer:
+      ribbon:
+        enable: true
+
+# SpringDoc Config
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+
+server:
+  port: 8181
+
+logging:
+  level:
+    com.javanautas: DEBUG
+    org.springdoc: DEBUG
+    org.hibernate.SQL: DEBUG
