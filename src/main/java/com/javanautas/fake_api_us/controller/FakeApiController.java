@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javanautas.fake_api_us.apiv1.dto.ProductsDto;
-import com.javanautas.fake_api_us.business.services.FakeApíService;
+import com.javanautas.fake_api_us.business.services.FakeApiService;
 
 // ✅ IMPORTS CORRETOS PARA SPRINGDOC (Swagger v3)
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,11 +19,12 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/produtos")
-@RequiredArgsConstructor
+@RequiredArgsConstructor // ✅ MUDAR PARA RequiredArgsConstructor
+
 @Tag(name = "fake-api", description = "API para gerenciamento de produtos")
 public class FakeApiController {
     
-    private final FakeApíService service;
+    private final FakeApiService service;
     
     @Operation(
         summary = "Busca todos os produtos", 

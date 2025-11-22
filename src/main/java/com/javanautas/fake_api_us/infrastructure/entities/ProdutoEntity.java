@@ -27,23 +27,29 @@ public class ProdutoEntity {
 	@Column(name="id")
 	private String id;
 	
-	@Column(name="title")
+	@Column(name="title", length=500)
 	private String nome;
 	
 	@Column(name="price")
 	private BigDecimal preco;
 	
-	@Column(name="category")
+	@Column(name="category", length=300)
 	private String categoria;
 	
-	@Column(name="description")
+	@Column(name="description", length=2000)
 	private String descricao;
 	
-	@Column(name="image")
+	@Column(name="image", length=1000)
 	private String imagem;
 	
 	@Column(name="data_inclusao")
 	private LocalDateTime dataInclusao;
+	
+	@Column(name="data_atualizacao")
+	private LocalDateTime dataAtualizacao;
+	
+	
+	
 	
 	
 	
