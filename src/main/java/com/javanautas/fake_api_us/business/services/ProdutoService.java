@@ -20,9 +20,20 @@ public class ProdutoService {
 	private final ProdutoRepository produtoRepository;
 	private final ProdutoConverter produtoConverter;
 
-	public ProdutoEntity salvarProdutos(ProdutoEntity produto) {
+	public ProdutoEntity salvarProdutos(ProdutoEntity produtoEntity) {
 		try {
-			return produtoRepository.save(produto);
+			return produtoRepository.save(produtoEntity);
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao salvar Produtos" + e);
+		}
+
+	}
+	
+	
+	public ProductsDto salvarProdutoDto(ProductsDto produtoDto) {
+		try {
+			ProdutoEntity produtoEntity = produtoConverter.ProductToEntity(produtoDto);
+			return produtoConverter.ProductToDto(produtoRepository.save(produtoEntity));
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao salvar Produtos" + e);
 		}
@@ -39,38 +50,40 @@ public class ProdutoService {
 	}
 	
 	
-	public ProdutoEntity buscarProdutoPorNome(String nome) {
+	public ProdutoEntity buscarProdutoPorNome(String produtoNome) {
 		try {
-			return produtoRepository.findByNome(nome);
+			return produtoRepository.findByNome(produtoNome);
 		} catch (Exception e) {
-		   throw new RuntimeException(format("Erro ao buscar produto por nome",nome),e);   
+		   throw new RuntimeException(format("Erro ao buscar produto por nome",produtoNome),e);   
 		}
 	}
 	
 	
-	public void deletaProduto(String nome) {
+	public void deletaProduto(String produtoNome) {
 		try {
-			produtoRepository.deleteByNome(nome);
+			produtoRepository.deleteByNome(produtoNome);
 		} catch (Exception e) {
-			throw new RuntimeException(format("Erro ao deletar produto por nome",nome),e);   
+			throw new RuntimeException(format("Erro ao deletar produto por nome",produtoNome),e);   
 		}
 	}
 	
 	
-	public Boolean existsPorNome(String nome) {
+	public Boolean existsPorNome(String produtoNome) {
         try {
-            return produtoRepository.existsByNome(nome);
+            return produtoRepository.existsByNome(produtoNome);
         } catch (Exception e) {
-            throw new RuntimeException(format("Erro ao buscar produto por nome '%s': %s", nome, e.getMessage()), e);
+            throw new RuntimeException(format("Erro ao buscar produto por nome '%s': %s", produtoNome, e.getMessage()), e);
         }
     }
 	
 	
 	public ProductsDto updateProduto(String id, ProductsDto produtoDto) {
 		try {
-			ProdutoEntity entity = produtoRepository.findById(id).orElseThrow(()->new RuntimeException("Id não existe no banco"));
+			ProdutoEntity produtoEntity = produtoRepository.findById(id).orElseThrow(()->new RuntimeException("Id não existe no banco"));
+			salvarProdutos(produtoConverter.ProductToEntityUpdate(produtoEntity,produtoDto,id));
+			return produtoConverter.ProductToDto(produtoRepository.findByNome(produtoEntity.getNome()));
 		} catch (Exception e) {
-			// TODO: handle exception
+			 throw new RuntimeException(format("Erro ao atualizar produto"));
 		}
 		
 	}
