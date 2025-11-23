@@ -40,7 +40,7 @@ public class FakeApiService { // ✅ Corrigir acento no nome
 			});
 
 			// ✅ Mover o return para fora do forEach
-			return produtoConverter.ProductToListDto(produtoService.buscarTodosProdutos());
+			return produtoService.buscaTodosProdutos();
 
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao buscar produtos: " + e.getMessage(), e);

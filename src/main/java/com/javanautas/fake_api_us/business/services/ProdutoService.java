@@ -41,20 +41,29 @@ public class ProdutoService {
 	}
 	
 	
-	public List<ProdutoEntity> buscarTodosProdutos() {
+//	public List<ProdutoEntity> buscarTodosProdutos() {
+//		try {
+//			return produtoRepository.findAll();
+//		} catch (Exception e) {
+//			throw new RuntimeException("Erro ao buscar todos os produtos"+e);
+//		}
+//	}
+	
+	
+	public ProductsDto buscarProdutoPorNome(String produtoNome) {
 		try {
-			return produtoRepository.findAll();
+			return produtoConverter.ProductToDto(produtoRepository.findByNome(produtoNome));
 		} catch (Exception e) {
-			throw new RuntimeException("Erro ao buscar todos os produtos"+e);
+		   throw new RuntimeException(format("Erro ao buscar produto por nome",produtoNome),e);   
 		}
 	}
 	
 	
-	public ProdutoEntity buscarProdutoPorNome(String produtoNome) {
+	public List<ProductsDto> buscaTodosProdutos() {
 		try {
-			return produtoRepository.findByNome(produtoNome);
+			return produtoConverter.ProductToListDto(produtoRepository.findAll());
 		} catch (Exception e) {
-		   throw new RuntimeException(format("Erro ao buscar produto por nome",produtoNome),e);   
+		   throw new RuntimeException(format("Erro ao buscar todos os produtos"),e);   
 		}
 	}
 	
