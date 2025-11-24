@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor // ✅ MUDAR PARA RequiredArgsConstructor
 
 @Tag(name = "fake-api", description = "API para gerenciamento de produtos")
-public class FakeApiController {
+public class ProdutoController {
 
 	private final FakeApiService fakeApiService;
 	private final ProdutoService produtoService;
