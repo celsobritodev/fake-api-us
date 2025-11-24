@@ -41,4 +41,4 @@ logging:
   level:
     com.javanautas: DEBUG
     org.springdoc: DEBUG
-    org.hibernate.SQL: DEBUG
+    org.hibernate.SQL: OFF

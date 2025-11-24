@@ -7,14 +7,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.javanautas.fake_api_us.apiv1.dto.ProductsDto;
 import com.javanautas.fake_api_us.business.services.FakeApiService;
 import com.javanautas.fake_api_us.business.services.ProdutoService;
+import com.javanautas.fake_api_us.dto.ProdutoDto;
 
 // ✅ IMPORTS CORRETOS PARA SPRINGDOC (Swagger v3)
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,9 +38,9 @@ public class FakeApiController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
 			@ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados") })
 	// busca produtos de uma api e salva no banco de dados
-	@PostMapping("/api")
-	public ResponseEntity<List<ProductsDto>> salvaProdutosApi() {
-		return ResponseEntity.ok(fakeApiService.buscarProdutos());
+	@PostMapping("/savefromapi")
+	public ResponseEntity<List<ProdutoDto>> salvarListarProdutosDaApi() {
+		return ResponseEntity.ok(fakeApiService.salvarListarProdutosDaApi());
 	}
 
 	
@@ -47,8 +48,8 @@ public class FakeApiController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Produto salvo com sucesso"),
 			@ApiResponse(responseCode = "500", description = "Erro ao salvar o produto") })
 	// busca produtos de uma api e salva no banco de dados
-	@PostMapping("/")
-	public ResponseEntity<ProductsDto> salvaProdutos(@RequestBody ProductsDto produtoDto) {
+	@PostMapping("/insert")
+	public ResponseEntity<ProdutoDto> salvarProduto(@RequestBody ProdutoDto produtoDto) {
 		return ResponseEntity.ok(produtoService.salvarProdutoDto(produtoDto));
 	}
 
@@ -57,10 +58,10 @@ public class FakeApiController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Produto atualizado com sucesso"),
 			@ApiResponse(responseCode = "500", description = "Erro ao atualizar o produto") })
 	// busca produtos de uma api e salva no banco de dados
-	@PostMapping("/")
-	public ResponseEntity<ProductsDto> updateProdutos(@RequestParam("id") String id,
-			@RequestBody ProductsDto produtoDto) {
-		return ResponseEntity.ok(produtoService.updateProduto(id, produtoDto));
+	@PutMapping("/update")
+	public ResponseEntity<ProdutoDto> atualizarProduto(@RequestParam("id") String id,
+			@RequestBody ProdutoDto produtoDto) {
+		return ResponseEntity.ok(produtoService.atualizarProduto(id, produtoDto));
 	}
 
 	
@@ -68,9 +69,9 @@ public class FakeApiController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Produto deletado com sucesso"),
 			@ApiResponse(responseCode = "500", description = "Erro ao deletar o produto") })
 	// busca produtos de uma api e salva no banco de dados
-	@DeleteMapping("/")
-	public ResponseEntity<Void> deletaProduto(@RequestParam("nome") String nome) {
-		produtoService.deletaProduto(nome);
+	@DeleteMapping("/deletebyname")
+	public ResponseEntity<Void> deletarProduto(@RequestParam("nome") String nome) {
+		produtoService.deletarProduto(nome);
 		return ResponseEntity.accepted().build();
 	}
 	
@@ -78,9 +79,9 @@ public class FakeApiController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Produtos buscados com sucesso"),
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar produtos") })
 	// busca produtos de uma api e salva no banco de dados
-	@GetMapping("/")
-	public ResponseEntity<List<ProductsDto>> buscaTodosProdutos() {
-		return ResponseEntity.ok(produtoService.buscaTodosProdutos());
+	@GetMapping("/listall")
+	public ResponseEntity<List<ProdutoDto>> buscarTodosProdutos() {
+		return ResponseEntity.ok(produtoService.buscarTodosProdutos());
 	}
 	
 	
@@ -88,8 +89,8 @@ public class FakeApiController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Produto buscado com sucesso"),
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar o produto") })
 	// busca produtos de uma api e salva no banco de dados
-	@GetMapping("/{nome}")
-	public ResponseEntity<ProductsDto> buscaProdutoPorNome(@PathVariable("nome") String nome) {
+	@GetMapping("findbyname/{nome}")
+	public ResponseEntity<ProdutoDto> buscarProdutoPorNome(@PathVariable("nome") String nome) {
 		return ResponseEntity.ok(produtoService.buscarProdutoPorNome(nome));
 	}
 	

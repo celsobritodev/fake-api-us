@@ -1,4 +1,4 @@
-package com.javanautas.fake_api_us.apiv1.dto;
+package com.javanautas.fake_api_us.dto;
 
 import java.math.BigDecimal;
 
@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductsDto {
+public class ProdutoDto {
 	
 	@JsonProperty(value="id")
 	private Long id;

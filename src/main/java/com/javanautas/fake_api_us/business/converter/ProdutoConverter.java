@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.javanautas.fake_api_us.apiv1.dto.ProductsDto;
+import com.javanautas.fake_api_us.dto.ProdutoDto;
 import com.javanautas.fake_api_us.infrastructure.entities.ProdutoEntity;
 
 @Component
@@ -14,21 +14,21 @@ public class ProdutoConverter {
 	
 	
 	// converte um dto para entity
-	public ProdutoEntity ProductToEntity(ProductsDto ProdutoDto) {
+	public ProdutoEntity ProductToEntity(ProdutoDto produtoDto) {
 		return ProdutoEntity.builder()
 				.id(String.valueOf(UUID.randomUUID()))
-				.nome(ProdutoDto.getNome())
-				.categoria(ProdutoDto.getCategoria())
-				.descricao(ProdutoDto.getDescricao())
-				.preco(ProdutoDto.getPreco())
-				.imagem(ProdutoDto.getImagem())
+				.nome(produtoDto.getNome())
+				.categoria(produtoDto.getCategoria())
+				.descricao(produtoDto.getDescricao())
+				.preco(produtoDto.getPreco())
+				.imagem(produtoDto.getImagem())
 				.dataInclusao(LocalDateTime.now())
 				.build();
 	}
 	
 	
-	public ProductsDto ProductToDto(ProdutoEntity produtoEntity) {
-		return ProductsDto.builder()
+	public ProdutoDto ProductToDto(ProdutoEntity produtoEntity) {
+		return ProdutoDto.builder()
 				.entityId(produtoEntity.getId())
 				.nome(produtoEntity.getNome())
 				.categoria(produtoEntity.getCategoria())
@@ -40,21 +40,21 @@ public class ProdutoConverter {
 		
 	}
 	
-	public ProdutoEntity ProductToEntityUpdate(ProdutoEntity produtoEntity, ProductsDto ProdutoDto, String id) {
+	public ProdutoEntity ProductToEntityUpdate(ProdutoEntity produtoEntity, ProdutoDto produtoDto, String id) {
 		return ProdutoEntity.builder()
 				.id(id)
-				.nome(ProdutoDto.getNome()!=null?ProdutoDto.getNome():produtoEntity.getNome())
-				.categoria(ProdutoDto.getCategoria()!=null?ProdutoDto.getCategoria():produtoEntity.getCategoria())
-				.descricao(ProdutoDto.getDescricao()!=null?ProdutoDto.getDescricao():produtoEntity.getDescricao())
-				.preco(ProdutoDto.getPreco()!=null?ProdutoDto.getPreco():produtoEntity.getPreco())
-				.imagem(ProdutoDto.getImagem()!=null?ProdutoDto.getImagem():produtoEntity.getImagem())
+				.nome(produtoDto.getNome()!=null?produtoDto.getNome():produtoEntity.getNome())
+				.categoria(produtoDto.getCategoria()!=null?produtoDto.getCategoria():produtoEntity.getCategoria())
+				.descricao(produtoDto.getDescricao()!=null?produtoDto.getDescricao():produtoEntity.getDescricao())
+				.preco(produtoDto.getPreco()!=null?produtoDto.getPreco():produtoEntity.getPreco())
+				.imagem(produtoDto.getImagem()!=null?produtoDto.getImagem():produtoEntity.getImagem())
 				.dataInclusao(produtoEntity.getDataInclusao())
 				.dataAtualizacao(LocalDateTime.now())
 				.build();
 	}
 	
 	
-	public List<ProductsDto> ProductToListDto(List<ProdutoEntity> entityList){
+	public List<ProdutoDto> ProductToListDto(List<ProdutoEntity> entityList){
 		return entityList.stream().map(this::ProductToDto).toList();
 		
 	}
