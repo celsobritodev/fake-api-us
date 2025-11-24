@@ -13,7 +13,7 @@ import com.javanautas.fake_api_us.infrastructure.entities.ProdutoEntity;
 public class ProdutoConverter {
 	
 	
-	// converte um dto para entity
+	// converte um ProdutoDto para ProdutoEntity
 	public ProdutoEntity ProductToEntity(ProdutoDto produtoDto) {
 		return ProdutoEntity.builder()
 				.id(String.valueOf(UUID.randomUUID()))
@@ -26,7 +26,7 @@ public class ProdutoConverter {
 				.build();
 	}
 	
-	
+	// converte um ProdutoEntity para um ProdutoDto
 	public ProdutoDto ProductToDto(ProdutoEntity produtoEntity) {
 		return ProdutoDto.builder()
 				.entityId(produtoEntity.getId())
@@ -40,6 +40,10 @@ public class ProdutoConverter {
 		
 	}
 	
+	
+	
+	// recebe um ProdutoDto e um ProdutoEntity
+	// atualiza ProdutoEntity com os camos de ProdutoDto que nao estao nulos
 	public ProdutoEntity ProductToEntityUpdate(ProdutoEntity produtoEntity, ProdutoDto produtoDto, String id) {
 		return ProdutoEntity.builder()
 				.id(id)
@@ -54,8 +58,11 @@ public class ProdutoConverter {
 	}
 	
 	
+	// converte uma lista de ProdutoEntity em lista de ProdutoDto
 	public List<ProdutoDto> ProductToListDto(List<ProdutoEntity> entityList){
-		return entityList.stream().map(this::ProductToDto).toList();
+		return entityList.stream()       // 🎯 Converte lista em stream
+				.map(this::ProductToDto)// 🔄 Aplica converter em cada elemento
+				.toList();              // 📦 Converte de volta para lista
 		
 	}
 	
